@@ -28,24 +28,60 @@ const getBackGroundColor = (os, browser, field) => {
   return colors[item];
 }
 
-// Create datasets from the dataEvents
-export const createDatasets = (dataEvents, osValues, browserValues) => {
+export const createEventObject = (text) => {
+  // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/replace#specifying_a_function_as_a_parameter
+  const replacer = (_match, p1, _offset, _string) => `\"${p1}\"`;
+  try {
+    return JSON.parse(text);
+  } catch(SyntaxError) {
+    const validJSON = text
+      .replace(/'/g, '')
+      .replace(/,$/, '')
+      .replace(/([a-zA-Z_]+)/g, replacer);
+
+    return JSON.parse(validJSON);
+  }
+}
+
+export const createDatasets = (events) => {
+  const eventsObjectList = events.split('\n').map(event => createEventObject(event));
+  const dataEvents = getDataEvents(eventsObjectList);
+
   const datasets = [];
-  for (let os of osValues) {
-    for (let browser of browserValues) {
-      ['min_response_time', 'max_response_time'].forEach(field => {
+  for (let os of osValues(dataEvents)) {
+    for (let browser of browserValues(dataEvents)) {
+      ['min_response_time', 'max_response_time'].forEach((field) => {
         const data = dataEvents
           .filter(event => event.os === os && event.browser === browser)
           .map(event => event[field]);
+
+        if (data.length) {
           datasets.push({
             label: `${os} ${browser} ${field}`,
             backgroundColor: getBackGroundColor(os, browser, field),
             borderColor: getBackGroundColor(os, browser, field),
             data,
-        });
+          });
+        }
       })
     }
   }
 
   return datasets;
+}
+
+export const plotChart = (events, labels, chartId) => {
+  const config = {
+    type: 'line',
+    data: {
+      labels,
+      datasets: createDatasets(events),
+    },
+    options: {}
+  };
+
+  new Chart(
+    document.getElementById(chartId),
+    config
+  );
 }
