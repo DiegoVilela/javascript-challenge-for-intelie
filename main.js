@@ -25,7 +25,6 @@ window.onload = () => {
 
     plotChart(
       eventsSequence.value,
-      labels,
       CHART_ID
     );
   });

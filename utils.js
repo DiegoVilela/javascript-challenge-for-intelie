@@ -1,3 +1,17 @@
+// Used to get "start" and "span" events
+const getEventByType = (eventsObjectList, eventType) => eventsObjectList
+  .find(event => event.type === eventType);
+
+// Return delta time in MM:SS format
+const getDeltaTime = (eventsObjectList) => {
+  const spanEvent = getEventByType(eventsObjectList, 'span');
+  const begin = new Date(spanEvent.begin);
+  const end = new Date(spanEvent.end);
+  const span = (end - begin) / 60000;
+
+  return new Date(span * 1000).toISOString().slice(14, 19);
+}
+
 // Returns events of the type data from a list of events
 export const getDataEvents = (eventsList) => eventsList.filter(event => event.type === 'data');
 
@@ -43,9 +57,12 @@ export const createEventObject = (text) => {
   }
 }
 
-export const createDatasets = (events) => {
-  const eventsObjectList = events.split('\n').map(event => createEventObject(event));
-  const dataEvents = getDataEvents(eventsObjectList);
+const eventsObject = (events) => events.split('\n').map(event => createEventObject(event));
+
+export const createDatasets = (eventsObject) => {
+
+  // const eventsObjectList = eventsObject(events);
+  const dataEvents = getDataEvents(eventsObject);
 
   const datasets = [];
   for (let os of osValues(dataEvents)) {
@@ -70,12 +87,14 @@ export const createDatasets = (events) => {
   return datasets;
 }
 
-export const plotChart = (events, labels, chartId) => {
+export const plotChart = (events, chartId) => {
+  const eventsObjectList = eventsObject(events);
+
   const config = {
     type: 'line',
     data: {
-      labels,
-      datasets: createDatasets(events),
+      labels: ['00:00', getDeltaTime(eventsObjectList)],
+      datasets: createDatasets(eventsObjectList),
     },
     options: {}
   };
