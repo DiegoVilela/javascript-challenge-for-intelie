@@ -4,17 +4,34 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+      main {
+        width: 70%;
+      }
+      textarea {
+        width: 100%;
+        height: 150px;
+        padding: 12px 20px;
+        box-sizing: border-box;
+        border: 2px solid #ccc;
+        border-radius: 4px;
+        background-color: #f8f8f8;
+        font-size: 16px;
+        resize: none;
+      }
+    </style>
     <title>Diego's Challenge for Intelie</title>
   </head>
   <body>
-    <h1>Diego's Challenge</h1>
+    <main>
+      <h1>Diego's Challenge</h1>
 
-    <textarea id="eventsSequence" name="eventsSequence"></textarea>
+      <textarea id="eventsSequence" name="eventsSequence"></textarea>
 
-    <div id="chartWrapper"></div>
+      <div id="chartWrapper"></div>
 
-    <button id="submitButton">Generate Chart</button>
-
+      <button id="submitButton">Generate Chart</button>
+    </main>
     <script type="module" src="main.js"></script>
   </body>
 </html>

@@ -60,14 +60,13 @@ export const createEventObject = (text) => {
 const eventsObject = (events) => events.split('\n').map(event => createEventObject(event));
 
 export const createDatasets = (eventsObject) => {
-
-  // const eventsObjectList = eventsObject(events);
+  const startEvent = getEventByType(eventsObject, 'start');
   const dataEvents = getDataEvents(eventsObject);
 
   const datasets = [];
   for (let os of osValues(dataEvents)) {
     for (let browser of browserValues(dataEvents)) {
-      ['min_response_time', 'max_response_time'].forEach((field) => {
+      startEvent.select.forEach((field) => {
         const data = dataEvents
           .filter(event => event.os === os && event.browser === browser)
           .map(event => event[field]);
