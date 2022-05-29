@@ -2,9 +2,11 @@
 **Desenvolvedora/Desenvolvedor Full Stack - Python | Javascript | React**
 
 ### How to see the solution
-Please follow the steps below:
-1. `git@github.com:DiegoVilela/javascript-challenge-for-intelie.git`
-2. In a browser, open the file `index.html`
+Please run the following commands in you terminal:
+1. `git clone git@github.com:DiegoVilela/javascript-challenge-for-intelie.git`
+2. `cd javascript-challenge-for-intelie`
+3. `npx http-server`
+4. Then go to http://127.0.0.1:8080
 
 ### Sample data
 To see the chart, you can copy and paste the following as input:
