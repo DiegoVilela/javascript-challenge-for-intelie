@@ -6,7 +6,8 @@ Please run the following commands in you terminal:
 1. `git clone git@github.com:DiegoVilela/javascript-challenge-for-intelie.git`
 2. `cd javascript-challenge-for-intelie`
 3. `npx http-server`
-4. Then go to http://127.0.0.1:8080
+4. You will be asked to install the package `http-server`. Type `y` to continue
+5. Then go to http://127.0.0.1:8080
 
 ### Sample data
 To see the chart, you can copy and paste the following as input:
